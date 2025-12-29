@@ -16,7 +16,7 @@ export async function signUpAction(formData: FormData) {
         },
     });
 
-    redirect("/");
+    redirect("/dashboard");
 }
 
 export async function signInAction(formData: FormData) {
@@ -30,7 +30,7 @@ export async function signInAction(formData: FormData) {
         },
     });
 
-    redirect("/");
+    redirect("/dashboard");
 }
 
 export async function signOutAction () {
