@@ -4,9 +4,9 @@ import { redirect } from "next/navigation";
 const Page = async () => {
   const session = await getSession();
   if (!session) {
-    redirect('/login');
+    redirect("/login");
   }
-  redirect('/dashboard');
+  redirect("/dashboard");
 };
 
 export default Page;

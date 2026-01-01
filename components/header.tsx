@@ -13,7 +13,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { authClient } from "@/lib/auth-client";
-import { ThemeSwitch } from "./theme-switch";
 
 export default function Header() {
   const pathname = usePathname();

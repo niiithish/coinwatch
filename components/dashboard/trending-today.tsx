@@ -1,10 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Image from "next/image";
-import { TableBody, TableCell, TableHead, TableHeader, TableRow, Table } from "@/components/ui/table";
+import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 interface TrendingCoinItem {
   id: string;
@@ -45,7 +51,9 @@ const TrendingToday = () => {
   useEffect(() => {
     const fetchTrending = async () => {
       try {
-        const response = await fetch("/api/coingecko?endpoint=/search/trending");
+        const response = await fetch(
+          "/api/coingecko?endpoint=/search/trending"
+        );
         const result: TrendingResponse = await response.json();
         setTrending(result.coins);
       } catch (error) {
@@ -55,39 +63,64 @@ const TrendingToday = () => {
     fetchTrending();
   }, []);
 
-  return <div className="max-h-[60vh] overflow-y-scroll">
-    <Card>
-      <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Symbol</TableHead>
-              <TableHead>Price</TableHead>
-              <TableHead>24h Change</TableHead>
-              <TableHead>24 Chart</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {trending.map((coin) => (
-              <TableRow key={coin.item.id} className="text-sm">
-                <TableCell className="align-center">
-                  <div className="flex flex-row gap-2 items-center">
-                    <Image src={coin.item.small} alt={coin.item.name} width={24} height={24} className="rounded-full" />
-                    {coin.item.name}
-                  </div>
-                </TableCell>
-                <TableCell className="align-center">{coin.item.symbol}</TableCell>
-                <TableCell className="align-center">${coin.item.data.price.toFixed(2)}</TableCell>
-                <TableCell className={`align-center ${coin.item.data.price_change_percentage_24h.usd > 0 ? "text-green-500" : "text-red-500"}`}>{coin.item.data.price_change_percentage_24h.usd.toFixed(2)}%</TableCell>
-                <TableCell className="align-center"><Image src={coin.item.data.sparkline} alt={coin.item.name} width={120} height={120} className="rounded-full" style={{ height: "auto" }} /></TableCell>
+  return (
+    <div className="max-h-[60vh] overflow-y-scroll">
+      <Card>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead>Symbol</TableHead>
+                <TableHead>Price</TableHead>
+                <TableHead>24h Change</TableHead>
+                <TableHead>24 Chart</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </CardContent>
-    </Card>
-  </div>;
+            </TableHeader>
+            <TableBody>
+              {trending.map((coin) => (
+                <TableRow className="text-sm" key={coin.item.id}>
+                  <TableCell className="align-center">
+                    <div className="flex flex-row items-center gap-2">
+                      <Image
+                        alt={coin.item.name}
+                        className="rounded-full"
+                        height={24}
+                        src={coin.item.small}
+                        width={24}
+                      />
+                      {coin.item.name}
+                    </div>
+                  </TableCell>
+                  <TableCell className="align-center">
+                    {coin.item.symbol}
+                  </TableCell>
+                  <TableCell className="align-center">
+                    ${coin.item.data.price.toFixed(2)}
+                  </TableCell>
+                  <TableCell
+                    className={`align-center ${coin.item.data.price_change_percentage_24h.usd > 0 ? "text-green-500" : "text-red-500"}`}
+                  >
+                    {coin.item.data.price_change_percentage_24h.usd.toFixed(2)}%
+                  </TableCell>
+                  <TableCell className="align-center">
+                    <Image
+                      alt={coin.item.name}
+                      className="rounded-full"
+                      height={120}
+                      src={coin.item.data.sparkline}
+                      style={{ height: "auto" }}
+                      width={120}
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+    </div>
+  );
 };
 
 export default TrendingToday;
