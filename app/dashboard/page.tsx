@@ -1,9 +1,10 @@
 "use client";
 
-import MarketOverview from "@/components/dashboard/market-overview";
 import HeatMap from "@/components/dashboard/heatmap";
-import TopStories from "@/components/dashboard/top-stories";
 import MarketData from "@/components/dashboard/market-data";
+import MarketOverview from "@/components/dashboard/market-overview";
+import TopStories from "@/components/dashboard/top-stories";
+
 const DashboardPage = () => {
   return (
     <div className="flex flex-col gap-12 px-8 py-6">

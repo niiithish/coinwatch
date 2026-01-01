@@ -1,65 +1,65 @@
 "use client";
-import { authClient } from "@/lib/auth-client";
-import { Button } from "@/components/ui/button";
-import { signOutAction } from "@/app/actions/auth";
-import Link from "next/link";
-import Image from "next/image";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { UnfoldMoreIcon, UserCircleIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { signOutAction } from "@/app/actions/auth";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Input } from "@/components/ui/input";
-import { usePathname } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 
 export default function Header() {
   const pathname = usePathname();
   const { data: session } = authClient.useSession();
   return (
-    <header className="flex px-8 py-4 border-b items-center justify-between">
-      <Link href="/" className="flex items-center gap-2">
-        <Image src="logo.svg" alt="Coin Mantra" width={26} height={26} />
-        <h1 className="text-xl font-bold">CoinWatch</h1>
+    <header className="flex items-center justify-between border-b px-8 py-4">
+      <Link className="flex items-center gap-2" href="/">
+        <Image alt="Coin Mantra" height={26} src="logo.svg" width={26} />
+        <h1 className="font-bold text-xl">CoinWatch</h1>
       </Link>
-      <div className="flex text-sm font-regular gap-[24px]">
+      <div className="flex gap-[24px] font-regular text-sm">
         <Link
-          href="/dashboard"
           className={
-            pathname === "/dashboard" ? "text-primary font-semibold" : ""
+            pathname === "/dashboard" ? "font-semibold text-primary" : ""
           }
+          href="/dashboard"
         >
           Dashboard
         </Link>
         <Popover>
           <PopoverTrigger className="cursor-pointer">Search</PopoverTrigger>
-          <PopoverContent className="w-[400px] h-[200px] p-0">
+          <PopoverContent className="h-[200px] w-[400px] p-0">
             <Input />
           </PopoverContent>
         </Popover>
         <Link
-          href="/watchlist"
           className={
-            pathname === "/watchlist" ? "text-primary font-semibold" : ""
+            pathname === "/watchlist" ? "font-semibold text-primary" : ""
           }
+          href="/watchlist"
         >
           Watchlist
         </Link>
         <Link
+          className={pathname === "/news" ? "font-semibold text-primary" : ""}
           href="/news"
-          className={pathname === "/news" ? "text-primary font-semibold" : ""}
         >
           News
         </Link>
       </div>
-      <div className="flex gap-4 items-center">
+      <div className="flex items-center gap-4">
         {session ? (
           <div className="flex gap-4">
             <Popover>
-              <PopoverTrigger className="cursor-pointer flex gap-2 items-center justify-center">
+              <PopoverTrigger className="flex cursor-pointer items-center justify-center gap-2">
                 <HugeiconsIcon icon={UserCircleIcon} size={24} />
-                <p className="flex text-sm font-regular">
+                <p className="flex font-regular text-sm">
                   {session.user?.name}
                 </p>
                 <HugeiconsIcon icon={UnfoldMoreIcon} size={16} />

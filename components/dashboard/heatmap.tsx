@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, memo } from "react";
+import { memo, useEffect, useRef } from "react";
 
 const HeatMap = () => {
   const container = useRef();
@@ -32,8 +32,11 @@ const HeatMap = () => {
   }, []);
 
   return (
-    <div className="tradingview-widget-container rounded-sm overflow-hidden" ref={container}>
-      <div className="tradingview-widget-container__widget"></div>
+    <div
+      className="tradingview-widget-container overflow-hidden rounded-sm"
+      ref={container}
+    >
+      <div className="tradingview-widget-container__widget" />
     </div>
   );
 };

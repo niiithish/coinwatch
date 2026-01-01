@@ -1,5 +1,3 @@
-import Header from "@/components/header";
-
 const NewsPage = () => {
   return (
     <div>
