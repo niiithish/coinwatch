@@ -6,7 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOutAction } from "@/app/actions/auth";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import SearchDialog from "@/components/search-dialog";
 import {
   Popover,
   PopoverContent,
@@ -32,12 +32,7 @@ export default function Header() {
         >
           Dashboard
         </Link>
-        <Popover>
-          <PopoverTrigger className="cursor-pointer">Search</PopoverTrigger>
-          <PopoverContent className="h-[200px] w-[400px] p-0">
-            <Input />
-          </PopoverContent>
-        </Popover>
+        <SearchDialog />
         <Link
           className={
             pathname === "/watchlist" ? "font-semibold text-primary" : ""

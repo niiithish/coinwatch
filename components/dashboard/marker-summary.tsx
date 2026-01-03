@@ -45,7 +45,6 @@ const MarkerSummary = () => {
           `/api/coingecko?endpoint=/coins/markets&category=${id}&vs_currency=usd&per_page=3&page=1`
         );
         const result = await response.json();
-        console.log(result);
         // Validate that result is an array before setting state
         if (Array.isArray(result)) {
           setCoins(result);
