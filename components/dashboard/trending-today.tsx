@@ -11,6 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import Link from "next/link";
 
 interface TrendingCoinItem {
   id: string;
@@ -81,17 +82,21 @@ const TrendingToday = () => {
               {trending.map((coin) => (
                 <TableRow className="text-sm" key={coin.item.id}>
                   <TableCell className="align-center">
-                    <div className="flex flex-row items-center gap-2">
-                      <Image
-                        alt={coin.item.name}
-                        className="rounded-full"
-                        height={24}
-                        src={coin.item.small}
-                        style={{ height: "auto" }}
-                        width={24}
-                      />
-                      {coin.item.name}
-                    </div>
+                    <Link href={`/coin/${coin.item.slug}`}>
+                      <div className="flex flex-row items-center gap-2">
+
+                        <Image
+                          alt={coin.item.name}
+                          className="rounded-full"
+                          height={24}
+                          src={coin.item.small}
+                          style={{ height: "auto" }}
+                          width={24}
+                        />
+                        <p className="hover:underline">{coin.item.name}</p>
+                      </div>
+
+                    </Link>
                   </TableCell>
                   <TableCell className="align-center">
                     {coin.item.symbol}
@@ -120,7 +125,7 @@ const TrendingToday = () => {
           </Table>
         </CardContent>
       </Card>
-    </div>
+    </div >
   );
 };
 

@@ -101,7 +101,7 @@ const TrendingCoins = ({ currentCoinId }: TrendingCoinsProps) => {
 
     return (
         <div className="w-full">
-            <Card className="border-0 bg-card/50 h-[60vh]">
+            <Card className="border-0 bg-card/50 h-[80vh]">
                 <CardHeader>
                     <h2 className="text-base font-bold text-foreground">Trending Coins</h2>
                 </CardHeader>

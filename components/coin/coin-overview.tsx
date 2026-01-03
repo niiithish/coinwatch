@@ -73,10 +73,10 @@ const CoinOverview = ({ coinData }: CoinOverviewProps) => {
         <div className="w-full">
             <Card>
                 <CardHeader className="flex items-center justify-between border-b pb-4">
-                    <h1 className="text-xl font-medium">Overview</h1>
+                    <h1 className="text-base font-medium">Overview</h1>
                     <Button>Create Alert</Button>
                 </CardHeader>
-                <CardContent className="flex flex-col gap-4 border-b py-4">
+                <CardContent className="flex flex-col gap-4 border-b pb-4">
                     <h1 className="flex text-base font-bold">Today’s Range</h1>
                     <div className="flex flex-col gap-2">
                         <div className="flex items-center justify-between text-sm text-foreground">
@@ -120,7 +120,7 @@ const CoinOverview = ({ coinData }: CoinOverviewProps) => {
                         </div>
                     </div>
                 </CardContent>
-                <CardContent className="flex flex-col gap-4 py-4">
+                <CardContent className="flex flex-col gap-4">
                     <h1 className="flex text-base font-bold">More Info</h1>
                     <div className="flex flex-col gap-2">
                         <div className="flex items-center justify-between text-sm text-foreground">

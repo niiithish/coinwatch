@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 import CoinOverview from "@/components/coin/coin-overview";
 import FinancialNews from "@/components/coin/financial-news";
 import TrendingCoins from "@/components/coin/trending-coins";
+import PriceChart from "@/components/coin/price-chart";
 import { useParams } from "next/navigation";
+import CoinDetails from "@/components/coin/coin-details";
 
 const CoinPage = () => {
     const { id } = useParams();
@@ -47,6 +49,15 @@ const CoinPage = () => {
         <div className="flex flex-col gap-8 p-8">
             <div className="flex gap-8">
                 <div className="flex flex-3 w-full flex-col gap-8">
+                    <PriceChart
+                        coinId={id as string}
+                        coinName={coinData?.name}
+                        coinSymbol={coinData?.symbol}
+                        coinImage={coinData?.image?.large}
+                        currentPrice={coinData?.market_data?.current_price?.usd}
+                        priceChange24h={coinData?.market_data?.price_change_24h}
+                        priceChangePercentage24h={coinData?.market_data?.price_change_percentage_24h}
+                    />
                 </div>
                 <div className="flex flex-1 flex-col gap-8">
                     <CoinOverview coinData={coinData} />
@@ -54,6 +65,7 @@ const CoinPage = () => {
             </div>
             <div className="flex gap-8">
                 <div className="flex flex-1 w-full flex-col gap-8">
+                    <CoinDetails coinData={coinData} />
                 </div>
                 <div className="flex flex-2 flex-col gap-8">
                     <FinancialNews coinName={coinData?.name} />
