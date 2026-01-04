@@ -51,17 +51,12 @@ const formatNumber = (value: number | undefined) => {
 const CoinOverview = ({ coinData }: CoinOverviewProps) => {
     if (!coinData) {
         return (
-            <div className="w-full">
-                <Card>
-                    <CardHeader className="flex items-center justify-between border-b pb-4">
-                        <h1 className="text-xl font-medium">Overview</h1>
-                        <Button disabled size="sm"><HugeiconsIcon icon={AddIcon} size={16} />Add to Watchlist</Button>
-                    </CardHeader>
-                    <CardContent className="p-8 text-center text-muted-foreground">
-                        Loading overview data...
-                    </CardContent>
-                </Card>
-            </div>
+            <Card className="overflow-y-scroll h-full">
+                <CardHeader className="flex items-center justify-between border-b">
+                    <h1 className="text-base font-medium">Overview</h1>
+                    <Button disabled size="sm"><HugeiconsIcon icon={AddIcon} size={16} />Add to Watchlist</Button>
+                </CardHeader>
+            </Card>
         );
     }
 

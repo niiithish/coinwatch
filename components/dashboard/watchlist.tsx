@@ -22,12 +22,12 @@ interface CoinData {
   symbol: string;
   name: string;
   image?:
-    | {
-        thumb?: string;
-        small?: string;
-        large?: string;
-      }
-    | string;
+  | {
+    thumb?: string;
+    small?: string;
+    large?: string;
+  }
+  | string;
   market_data?: {
     current_price?: {
       usd?: number;
@@ -297,9 +297,7 @@ const Watchlist = () => {
                 <div className="font-semibold text-xl">
                   ${coin.market_data.current_price.usd.toFixed(2)}
                 </div>
-              ) : (
-                <div className="font-semibold text-xl">Loading...</div>
-              )}
+              ) : null}
               {coin.market_data?.price_change_percentage_24h !== undefined ? (
                 <div
                   className={`flex items-center gap-1.5 font-medium text-xs ${coin.market_data.price_change_percentage_24h > 0 ? "text-green-500" : "text-red-500"}`}

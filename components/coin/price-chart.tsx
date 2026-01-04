@@ -58,7 +58,6 @@ const PriceChart = ({
     priceChangePercentage24h,
 }: PriceChartProps) => {
     const [selectedTimeFrame, setSelectedTimeFrame] = useState<TimeFrame>("1");
-    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [chartData, setChartData] = useState<ChartData<"line">>({
         labels: [],
@@ -77,7 +76,6 @@ const PriceChart = ({
         if (!coinId) return;
 
         try {
-            setIsLoading(true);
             setError(null);
 
             // Determine interval based on timeframe
@@ -137,8 +135,6 @@ const PriceChart = ({
         } catch (err) {
             console.error("Error fetching chart data:", err);
             setError("Failed to load chart data");
-        } finally {
-            setIsLoading(false);
         }
     }, [coinId, selectedTimeFrame, priceChangePercentage24h]);
 
@@ -208,16 +204,7 @@ const PriceChart = ({
             </CardHeader>
 
             <CardContent className="flex-1 min-h-0 flex flex-col">
-                {isLoading && (
-                    <div className="flex flex-1 items-center justify-center">
-                        <div className="flex flex-col items-center gap-2 text-muted-foreground">
-                            <div className="h-8 w-8 animate-spin rounded-full border-2 border-muted-foreground border-t-transparent" />
-                            <span>Loading chart...</span>
-                        </div>
-                    </div>
-                )}
-
-                {error && !isLoading && (
+                {error && (
                     <div className="flex flex-1 items-center justify-center">
                         <div className="text-center text-muted-foreground">
                             <p className="text-lg font-medium text-destructive">
@@ -234,7 +221,7 @@ const PriceChart = ({
                     </div>
                 )}
 
-                {!isLoading && !error && (
+                {!error && (
                     <div className="flex-1 min-h-0">
                         <LineChart
                             className="h-full w-full"

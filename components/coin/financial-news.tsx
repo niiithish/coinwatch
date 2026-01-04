@@ -20,7 +20,6 @@ interface FinancialNewsProps {
 
 const FinancialNews = ({ coinName }: FinancialNewsProps) => {
   const [news, setNews] = useState<News[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   // Helper function to format date
@@ -39,7 +38,6 @@ const FinancialNews = ({ coinName }: FinancialNewsProps) => {
 
     const fetchNews = async () => {
       try {
-        setIsLoading(true);
         setError(null);
         const query = coinName ? encodeURIComponent(coinName) : "crypto";
         const response = await fetch(`/api/newsapi?q=${query}-crypto`, { cache: 'no-store' });
@@ -55,25 +53,11 @@ const FinancialNews = ({ coinName }: FinancialNewsProps) => {
         console.error("Error fetching news:", err);
         setError(err instanceof Error ? err.message : "Failed to load news");
         setNews([]);
-      } finally {
-        setIsLoading(false);
       }
     };
     fetchNews();
   }, [coinName]);
 
-  // Show loading state
-  if (isLoading) {
-    return (
-      <Card className="overflow-y-scroll">
-        <CardContent className="flex flex-col gap-3">
-          <div className="flex items-center justify-center py-8">
-            <p className="text-muted-foreground text-sm">Loading news...</p>
-          </div>
-        </CardContent>
-      </Card>
-    );
-  }
 
   // Show error state
   if (error) {

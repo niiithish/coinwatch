@@ -15,6 +15,7 @@ import {
     GithubIcon,
     LegalDocument01Icon,
 } from "@hugeicons/core-free-icons";
+import { Badge } from "../ui/badge";
 
 interface CoinDetailsProps {
     coinData: any;
@@ -24,19 +25,12 @@ const CoinDetails = ({ coinData }: CoinDetailsProps) => {
     const [copied, setCopied] = useState(false);
     const [expanded, setExpanded] = useState(false);
 
+    // Show empty card while data is loading
     if (!coinData) {
         return (
-            <Card className="animate-pulse">
-                <CardHeader>
-                    <div className="h-6 w-24 bg-muted rounded"></div>
-                </CardHeader>
-                <CardContent>
-                    <div className="space-y-4">
-                        <div className="h-4 w-full bg-muted rounded"></div>
-                        <div className="h-4 w-3/4 bg-muted rounded"></div>
-                        <div className="h-4 w-1/2 bg-muted rounded"></div>
-                    </div>
-                </CardContent>
+            <Card className="overflow-y-scroll h-full">
+                <CardHeader />
+                <CardContent />
             </Card>
         );
     }
@@ -79,7 +73,6 @@ const CoinDetails = ({ coinData }: CoinDetailsProps) => {
         return `${address.slice(0, 12)}...${address.slice(-6)}`;
     };
 
-    // Remove HTML tags from description
     const cleanDescription = (html: string) => {
         return html.replace(/<[^>]*>/g, "");
     };
@@ -98,13 +91,11 @@ const CoinDetails = ({ coinData }: CoinDetailsProps) => {
                         />
                     )}
                     <div>
-                        <h1 className="text-base font-semibold">{name}</h1>
+                        <h1 className="text-base font-semibold overflow-hidden truncate">{name}</h1>
                         <span className="text-xs text-muted-foreground uppercase">{symbol}</span>
                     </div>
                     {market_cap_rank && (
-                        <span className="ml-auto px-2 py-1 text-xs font-medium bg-primary/10 text-primary rounded-full">
-                            Rank #{market_cap_rank}
-                        </span>
+                        <Badge>Rank #{market_cap_rank}</Badge>
                     )}
                 </div>
             </CardHeader>
@@ -206,7 +197,7 @@ const CoinDetails = ({ coinData }: CoinDetailsProps) => {
                     </div>
                 </div>
             </CardContent>
-        </Card>
+        </Card >
     );
 };
 

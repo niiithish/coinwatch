@@ -10,14 +10,12 @@ import CoinDetails from "@/components/coin/coin-details";
 const CoinPage = () => {
     const { id } = useParams();
     const [coinData, setCoinData] = useState<any>(null);
-    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchCoinData = async () => {
             if (!id) return;
 
-            setIsLoading(true);
             try {
                 const response = await fetch(`/api/coingecko?endpoint=/coins/${id}`);
                 if (!response.ok) {
@@ -29,11 +27,8 @@ const CoinPage = () => {
             } catch (err) {
                 console.error("Error fetching coin data:", err);
                 setError("Error loading coin details. Please try again later.");
-            } finally {
-                setIsLoading(false);
             }
         };
-
         fetchCoinData();
     }, [id]);
 
@@ -47,7 +42,7 @@ const CoinPage = () => {
 
     return (
         <div className="flex flex-col gap-8 p-8">
-            <div className="flex gap-8 max-h-[60vh] h-full">
+            <div className="flex gap-8 max-h-[60vh] min-h-[60vh] h-full">
                 <div className="flex flex-3 w-full flex-col gap-8">
                     <PriceChart
                         coinId={id as string}
@@ -63,7 +58,7 @@ const CoinPage = () => {
                     <CoinOverview coinData={coinData} />
                 </div>
             </div>
-            <div className="flex gap-8 max-h-[60vh] h-full">
+            <div className="flex gap-8 max-h-[60vh] min-h-[60vh] h-full">
                 <div className="flex flex-1 w-full flex-col gap-8">
                     <CoinDetails coinData={coinData} />
                 </div>

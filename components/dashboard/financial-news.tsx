@@ -16,13 +16,11 @@ interface News {
 
 const FinancialNews = () => {
   const [news, setNews] = useState<News[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        setIsLoading(true);
         setError(null);
         const response = await fetch("/api/newsapi");
         const data = await response.json();
@@ -36,8 +34,6 @@ const FinancialNews = () => {
         console.error("Error fetching news:", err);
         setError(err instanceof Error ? err.message : "Failed to load news");
         setNews([]);
-      } finally {
-        setIsLoading(false);
       }
     };
     fetchNews();
@@ -46,22 +42,17 @@ const FinancialNews = () => {
     <div className="max-h-[60vh] overflow-y-scroll">
       <Card>
         <CardContent className="flex flex-col gap-3">
-          {isLoading && (
-            <div className="flex items-center justify-center py-8">
-              <p className="text-muted-foreground text-sm">Loading news...</p>
-            </div>
-          )}
           {error && (
             <div className="flex items-center justify-center py-8">
               <p className="text-destructive text-sm">{error}</p>
             </div>
           )}
-          {!isLoading && !error && news.length === 0 && (
+          {news.length === 0 && (
             <div className="flex items-center justify-center py-8">
               <p className="text-muted-foreground text-sm">No news available</p>
             </div>
           )}
-          {!isLoading && !error && news.map((item) => (
+          {news.map((item) => (
             <div
               className="flex flex-col gap-2 border-foreground/20 border-b py-2"
               key={item.url}

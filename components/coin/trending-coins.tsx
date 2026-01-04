@@ -65,13 +65,11 @@ const formatCurrency = (value: number | undefined) => {
 
 const TrendingCoins = ({ currentCoinId }: TrendingCoinsProps) => {
     const [coins, setCoins] = useState<TrendingCoin[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchTrendingCoins = async () => {
             try {
-                setIsLoading(true);
                 setError(null);
 
                 const response = await fetch("/api/coingecko?endpoint=/search/trending");
@@ -91,8 +89,6 @@ const TrendingCoins = ({ currentCoinId }: TrendingCoinsProps) => {
             } catch (err) {
                 console.error("Error fetching trending coins:", err);
                 setError(err instanceof Error ? err.message : "Failed to load trending coins");
-            } finally {
-                setIsLoading(false);
             }
         };
 
