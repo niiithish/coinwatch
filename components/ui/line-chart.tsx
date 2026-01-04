@@ -111,6 +111,10 @@ export function LineChart({
           font: {
             size: 14,
           },
+          maxTicksLimit: 7,
+          autoSkip: true,
+          maxRotation: 0,
+          minRotation: 0,
         },
       },
       y: {
@@ -127,7 +131,20 @@ export function LineChart({
             size: 14,
           },
           maxTicksLimit: 5, // Limit to 5 ticks on Y-axis
-          callback: (value) => value.toLocaleString(),
+          callback: (value) => {
+            const num = typeof value === "number" ? value : Number(value);
+            if (num === 0) return "0";
+            if (num < 1) {
+              return num.toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 8,
+              });
+            }
+            return num.toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            });
+          },
         },
       },
     },

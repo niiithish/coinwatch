@@ -100,71 +100,69 @@ const TrendingCoins = ({ currentCoinId }: TrendingCoinsProps) => {
     }, [currentCoinId]);
 
     return (
-        <div className="w-full">
-            <Card className="border-0 bg-card/50 h-[80vh]">
-                <CardHeader>
-                    <h2 className="text-base font-bold text-foreground">Trending Coins</h2>
-                </CardHeader>
-                <CardContent className="flex flex-col p-0 overflow-y-auto">
-                    <div className="flex flex-col">
-                        {coins.map((coin, index) => {
-                            const priceChange = coin.item.data.price_change_percentage_24h?.usd ?? 0;
-                            const isPositive = priceChange >= 0;
-                            return (
-                                <Link
-                                    key={coin.item.id}
-                                    href={`/coin/${coin.item.id}`}
-                                    className="block"
+        <Card className="overflow-y-scroll h-full">
+            <CardHeader>
+                <h2 className="text-base font-bold text-foreground">Trending Coins</h2>
+            </CardHeader>
+            <CardContent className="flex flex-col p-0">
+                <div className="flex flex-col">
+                    {coins.map((coin, index) => {
+                        const priceChange = coin.item.data.price_change_percentage_24h?.usd ?? 0;
+                        const isPositive = priceChange >= 0;
+                        return (
+                            <Link
+                                key={coin.item.id}
+                                href={`/coin/${coin.item.id}`}
+                                className="block"
+                            >
+                                <div
+                                    className={`flex items-center justify-between px-4 py-3 hover:bg-accent/30 transition-colors ${index !== coins.length - 1 ? 'border-b border-border/30' : ''
+                                        }`}
                                 >
-                                    <div
-                                        className={`flex items-center justify-between px-4 py-3 hover:bg-accent/30 transition-colors ${index !== coins.length - 1 ? 'border-b border-border/30' : ''
-                                            }`}
-                                    >
-                                        {/* Left side: Logo, Name, Price */}
-                                        <div className="flex items-center gap-3">
-                                            <div className="rounded-lg overflow-hidden flex items-center justify-center">
-                                                <Image
-                                                    src={coin.item.small}
-                                                    alt={coin.item.name}
-                                                    width={32}
-                                                    height={32}
-                                                    className="rounded-lg"
-                                                    unoptimized
-                                                />
-                                            </div>
-                                            <div className="flex flex-col gap-1">
-                                                <span className="font-medium text-xs text-muted-foreground">
-                                                    {coin.item.name}
-                                                </span>
-                                                <span className="text-sm font-medium text-foreground">
-                                                    {formatCurrency(coin.item.data.price)}
-                                                </span>
-                                            </div>
+                                    {/* Left side: Logo, Name, Price */}
+                                    <div className="flex items-center gap-3">
+                                        <div className="rounded-lg overflow-hidden flex items-center justify-center">
+                                            <Image
+                                                src={coin.item.small}
+                                                alt={coin.item.name}
+                                                width={32}
+                                                height={32}
+                                                className="rounded-lg"
+                                                unoptimized
+                                            />
                                         </div>
-
-                                        {/* Right side: Symbol, Price Change */}
-                                        <div className="flex flex-col items-end">
-                                            <span className="text-xs text-muted-foreground uppercase">
-                                                {coin.item.symbol}
+                                        <div className="flex flex-col gap-1">
+                                            <span className="font-medium text-xs text-muted-foreground">
+                                                {coin.item.name}
                                             </span>
-                                            <span
-                                                className={`text-xs font-medium ${isPositive
-                                                    ? "text-emerald-400"
-                                                    : "text-red-400"
-                                                    }`}
-                                            >
-                                                {isPositive ? "+" : ""}
-                                                {priceChange.toFixed(2)}%
+                                            <span className="text-sm font-medium text-foreground">
+                                                {formatCurrency(coin.item.data.price)}
                                             </span>
                                         </div>
                                     </div>
-                                </Link>
-                            );
-                        })}
-                    </div>
-                </CardContent>
-            </Card>
-        </div>
+
+                                    {/* Right side: Symbol, Price Change */}
+                                    <div className="flex flex-col items-end">
+                                        <span className="text-xs text-muted-foreground uppercase">
+                                            {coin.item.symbol}
+                                        </span>
+                                        <span
+                                            className={`text-xs font-medium ${isPositive
+                                                ? "text-emerald-400"
+                                                : "text-red-400"
+                                                }`}
+                                        >
+                                            {isPositive ? "+" : ""}
+                                            {priceChange.toFixed(2)}%
+                                        </span>
+                                    </div>
+                                </div>
+                            </Link>
+                        );
+                    })}
+                </div>
+            </CardContent>
+        </Card>
     );
 };
 

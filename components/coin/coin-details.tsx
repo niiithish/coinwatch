@@ -57,8 +57,8 @@ const CoinDetails = ({ coinData }: CoinDetailsProps) => {
     } = coinData;
 
     const descriptionText = description?.en || "";
-    const truncatedDescription = descriptionText.length > 300
-        ? descriptionText.substring(0, 300) + "..."
+    const truncatedDescription = descriptionText.length > 150
+        ? descriptionText.substring(0, 150) + "..."
         : descriptionText;
 
     const homepage = links?.homepage?.[0] || "";
@@ -85,8 +85,8 @@ const CoinDetails = ({ coinData }: CoinDetailsProps) => {
     };
 
     return (
-        <Card className="h-[80vh] overflow-y-scroll">
-            <CardHeader className="pb-4">
+        <Card className="overflow-y-scroll h-full">
+            <CardHeader>
                 <div className="flex items-center gap-3">
                     {image?.large && (
                         <Image
@@ -115,10 +115,10 @@ const CoinDetails = ({ coinData }: CoinDetailsProps) => {
                     <p className="text-xs leading-relaxed text-foreground/90">
                         {expanded ? cleanDescription(descriptionText) : cleanDescription(truncatedDescription)}
                     </p>
-                    {descriptionText.length > 300 && (
+                    {descriptionText.length > 150 && (
                         <button
                             onClick={() => setExpanded(!expanded)}
-                            className="text-sm text-primary hover:underline"
+                            className="text-xs text-primary hover:underline"
                         >
                             {expanded ? "Show less" : "Read more"}
                         </button>
@@ -153,7 +153,7 @@ const CoinDetails = ({ coinData }: CoinDetailsProps) => {
                     <div className="space-y-2">
                         <h3 className="text-sm font-medium text-muted-foreground">Categories</h3>
                         <div className="flex flex-wrap gap-2">
-                            {categories.slice(0, 5).map((category: string, index: number) => (
+                            {categories.slice(0, 3).map((category: string, index: number) => (
                                 <span
                                     key={index}
                                     className="px-2 py-1 text-xs bg-secondary text-secondary-foreground rounded-full"
@@ -161,9 +161,9 @@ const CoinDetails = ({ coinData }: CoinDetailsProps) => {
                                     {category}
                                 </span>
                             ))}
-                            {categories.length > 5 && (
+                            {categories.length > 3 && (
                                 <span className="px-2 py-1 text-xs text-muted-foreground">
-                                    +{categories.length - 5} more
+                                    +{categories.length - 3} more
                                 </span>
                             )}
                         </div>

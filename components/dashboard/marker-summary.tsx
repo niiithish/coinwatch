@@ -154,7 +154,7 @@ const MarkerSummary = () => {
               <div className="flex items-stretch justify-between gap-5">
                 {coins.map((item: Coin) => (
                   <Card
-                    className={`h-full w-full cursor-pointer border-0 ${item.id === coin ? "bg-secondary/20 shadow-sm" : ""}`}
+                    className={`h-full w-full cursor-pointer border-0 ${item.id === coin ? "bg-secondary/50 shadow-sm" : ""}`}
                     key={item.id}
                     onClick={() => {
                       setCoin(item.id);

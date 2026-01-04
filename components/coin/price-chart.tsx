@@ -30,7 +30,7 @@ const formatCurrency = (value: number | undefined) => {
         style: "currency",
         currency: "USD",
         minimumFractionDigits: 2,
-        maximumFractionDigits: value < 1 ? 6 : 2,
+        maximumFractionDigits: value < 1 ? 8 : 2,
     }).format(value);
 };
 
@@ -57,7 +57,7 @@ const PriceChart = ({
     priceChange24h,
     priceChangePercentage24h,
 }: PriceChartProps) => {
-    const [selectedTimeFrame, setSelectedTimeFrame] = useState<TimeFrame>("7");
+    const [selectedTimeFrame, setSelectedTimeFrame] = useState<TimeFrame>("1");
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [chartData, setChartData] = useState<ChartData<"line">>({
@@ -68,10 +68,7 @@ const PriceChart = ({
                 data: [],
                 fill: false,
                 borderColor: "#0FEDBE",
-                backgroundColor: "#0FEDBE",
-                tension: 0.4,
-                pointRadius: 0,
-                pointHoverRadius: 4,
+                backgroundColor: "#0FEDBE"
             },
         ],
     });
@@ -134,9 +131,6 @@ const PriceChart = ({
                         fill: false,
                         borderColor: lineColor,
                         backgroundColor: lineColor,
-                        tension: 0.4,
-                        pointRadius: 0,
-                        pointHoverRadius: 4,
                     },
                 ],
             });
@@ -157,8 +151,8 @@ const PriceChart = ({
     const isPositive = priceChangePercentage24h !== undefined ? priceChangePercentage24h >= 0 : true;
 
     return (
-        <Card className="w-full border-none bg-card/50 backdrop-blur-sm">
-            <CardHeader className="flex flex-row items-center justify-between pb-4">
+        <Card className="h-full overflow-hidden flex flex-col">
+            <CardHeader className="flex flex-row items-center justify-between">
                 {/* Left side - Coin info */}
                 <div className="flex items-center gap-4">
                     {coinImage && (
@@ -201,7 +195,7 @@ const PriceChart = ({
                                 key={timeFrame}
                                 type="button"
                                 onClick={() => setSelectedTimeFrame(timeFrame)}
-                                className={`rounded-md px-3 py-1.5 text-sm font-medium transition-all duration-200 ${selectedTimeFrame === timeFrame
+                                className={`cursor-pointer rounded-md px-2 py-1 text-xs font-medium transition-all duration-200 ${selectedTimeFrame === timeFrame
                                     ? "bg-primary text-primary-foreground"
                                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
                                     }`}
@@ -213,9 +207,9 @@ const PriceChart = ({
                 </div>
             </CardHeader>
 
-            <CardContent className="p-4">
+            <CardContent className="flex-1 min-h-0 flex flex-col">
                 {isLoading && (
-                    <div className="flex h-[45vh] items-center justify-center">
+                    <div className="flex flex-1 items-center justify-center">
                         <div className="flex flex-col items-center gap-2 text-muted-foreground">
                             <div className="h-8 w-8 animate-spin rounded-full border-2 border-muted-foreground border-t-transparent" />
                             <span>Loading chart...</span>
@@ -224,7 +218,7 @@ const PriceChart = ({
                 )}
 
                 {error && !isLoading && (
-                    <div className="flex h-[45vh] items-center justify-center">
+                    <div className="flex flex-1 items-center justify-center">
                         <div className="text-center text-muted-foreground">
                             <p className="text-lg font-medium text-destructive">
                                 {error}
@@ -241,7 +235,7 @@ const PriceChart = ({
                 )}
 
                 {!isLoading && !error && (
-                    <div style={{ height: "45vh" }}>
+                    <div className="flex-1 min-h-0">
                         <LineChart
                             className="h-full w-full"
                             data={chartData}

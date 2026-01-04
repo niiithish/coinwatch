@@ -47,7 +47,7 @@ const CoinPage = () => {
 
     return (
         <div className="flex flex-col gap-8 p-8">
-            <div className="flex gap-8">
+            <div className="flex gap-8 max-h-[60vh] h-full">
                 <div className="flex flex-3 w-full flex-col gap-8">
                     <PriceChart
                         coinId={id as string}
@@ -63,14 +63,14 @@ const CoinPage = () => {
                     <CoinOverview coinData={coinData} />
                 </div>
             </div>
-            <div className="flex gap-8">
+            <div className="flex gap-8 max-h-[60vh] h-full">
                 <div className="flex flex-1 w-full flex-col gap-8">
                     <CoinDetails coinData={coinData} />
                 </div>
                 <div className="flex flex-2 flex-col gap-8">
                     <FinancialNews coinName={coinData?.name} />
                 </div>
-                <div className="flex flex-1 w-full flex-col gap-8 ">
+                <div className="flex flex-1 w-full flex-col gap-8">
                     <TrendingCoins currentCoinId={coinData?.id} />
                 </div>
             </div>
