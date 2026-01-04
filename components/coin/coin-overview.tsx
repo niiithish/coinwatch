@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "../ui/card";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AddIcon, CircleIcon } from "@hugeicons/core-free-icons";
+import CreateAlertDialog from "../create-alert-dialog";
 
 interface MarketData {
     current_price: { [key: string]: number };
@@ -54,7 +55,7 @@ const CoinOverview = ({ coinData }: CoinOverviewProps) => {
             <Card className="overflow-y-scroll h-full">
                 <CardHeader className="flex items-center justify-between border-b">
                     <h1 className="text-base font-medium">Overview</h1>
-                    <Button disabled size="sm"><HugeiconsIcon icon={AddIcon} size={16} />Add to Watchlist</Button>
+                    <Button disabled size="sm"><HugeiconsIcon icon={AddIcon} size={16} />Create Alert</Button>
                 </CardHeader>
             </Card>
         );
@@ -70,7 +71,7 @@ const CoinOverview = ({ coinData }: CoinOverviewProps) => {
         <Card className="overflow-y-scroll h-full">
             <CardHeader className="flex items-center justify-between border-b">
                 <h1 className="text-base font-medium">Overview</h1>
-                <Button size="sm"> <HugeiconsIcon icon={AddIcon} size={16} />Add to Watchlist</Button>
+                <CreateAlertDialog coinId={coinData.id} coinName={coinData.name} coinSymbol={coinData.symbol.toUpperCase()} />
             </CardHeader>
             <CardContent className="flex flex-col gap-2 border-b pb-4">
                 <h1 className="flex text-base font-bold">Today’s Range</h1>

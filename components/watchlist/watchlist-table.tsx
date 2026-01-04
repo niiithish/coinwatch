@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -12,6 +13,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { StarIcon } from "@hugeicons/core-free-icons";
 
 interface TrendingCoinItem {
   id: string;
@@ -46,7 +49,28 @@ interface TrendingResponse {
   coins: TrendingCoin[];
 }
 
-const TrendingToday = () => {
+const formatCurrency = (value: number | undefined) => {
+  if (value === undefined) return "N/A";
+  if (value >= 1e12) return `$${(value / 1e12).toFixed(2)}T`;
+  if (value >= 1e9) return `$${(value / 1e9).toFixed(2)}B`;
+  if (value >= 1e6) return `$${(value / 1e6).toFixed(2)}M`;
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: value !== undefined && value < 1 ? 8 : 2,
+  }).format(value);
+};
+
+const parseFormattedNumber = (value: string | undefined): number | undefined => {
+  if (!value) return undefined;
+  // Remove currency symbols, commas, and whitespace
+  const cleaned = value.replace(/[$,\s]/g, "");
+  const num = parseFloat(cleaned);
+  return isNaN(num) ? undefined : num;
+};
+
+const WatchlistTable = () => {
   const [trending, setTrending] = useState<TrendingCoin[]>([]);
 
   useEffect(() => {
@@ -65,33 +89,32 @@ const TrendingToday = () => {
   }, []);
 
   return (
-    <Card className="overflow-y-scroll">
+    <Card className="overflow-y-scroll w-full">
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead></TableHead>
               <TableHead>Name</TableHead>
               <TableHead>Symbol</TableHead>
               <TableHead>Price</TableHead>
               <TableHead>24h Change</TableHead>
-              <TableHead>24 Chart</TableHead>
+              <TableHead>Market Cap</TableHead>
+              <TableHead>24h Volume</TableHead>
+              <TableHead>Alert</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {trending.map((coin) => (
               <TableRow className="text-sm" key={coin.item.id}>
                 <TableCell className="align-center">
+                  <Button variant="ghost" className="rounded-full">
+                    <HugeiconsIcon icon={StarIcon} size={12} />
+                  </Button>
+                </TableCell>
+                <TableCell className="align-center">
                   <Link href={`/coin/${coin.item.slug}`}>
                     <div className="flex flex-row items-center gap-2">
-
-                      <Image
-                        alt={coin.item.name}
-                        className="rounded-full"
-                        height={24}
-                        src={coin.item.small}
-                        style={{ height: "auto" }}
-                        width={24}
-                      />
                       <p className="hover:underline">{coin.item.name}</p>
                     </div>
 
@@ -108,15 +131,14 @@ const TrendingToday = () => {
                 >
                   {coin.item.data.price_change_percentage_24h.usd.toFixed(2)}%
                 </TableCell>
-                <TableCell className="align-center w-full">
-                  <Image
-                    alt={coin.item.name}
-                    className="rounded-full"
-                    height={120}
-                    src={coin.item.data.sparkline}
-                    style={{ width: "auto", height: "auto" }}
-                    width={120}
-                  />
+                <TableCell className="align-center">
+                  {formatCurrency(parseFormattedNumber(coin.item.data.market_cap))}
+                </TableCell>
+                <TableCell className="align-center">
+                  {formatCurrency(parseFormattedNumber(coin.item.data.total_volume))}
+                </TableCell>
+                <TableCell className="align-center">
+                  <Button>Add Alert</Button>
                 </TableCell>
               </TableRow>
             ))}
@@ -127,4 +149,4 @@ const TrendingToday = () => {
   );
 };
 
-export default TrendingToday;
+export default WatchlistTable;

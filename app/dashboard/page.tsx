@@ -6,7 +6,7 @@ import TrendingToday from "@/components/dashboard/trending-today";
 import Watchlist from "@/components/dashboard/watchlist";
 import { Button } from "@/components/ui/button";
 
-const Dashboard2Page = () => {
+const DashboardPage = () => {
   return (
     <div className="flex flex-col gap-10 p-8">
       <div className="flex flex-1 flex-row gap-10">
@@ -22,7 +22,7 @@ const Dashboard2Page = () => {
           <Watchlist />
         </div>
       </div>
-      <div className="flex flex-1 flex-row gap-10">
+      <div className="flex gap-8 max-h-[60vh] min-h-[60vh] h-full">
         <div className="flex flex-1 flex-col gap-4">
           <div className="flex items-center justify-between">
             <h2 className="font-bold text-xl">Trending Today</h2>
@@ -42,4 +42,4 @@ const Dashboard2Page = () => {
   );
 };
 
-export default Dashboard2Page;
+export default DashboardPage;
