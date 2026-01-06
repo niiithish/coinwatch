@@ -270,21 +270,23 @@ const Watchlist = () => {
                     <div className="rounded-full">
                       <HugeiconsIcon
                         className="cursor-pointer"
+                        size={18}
                         color="#63a401"
                         fill="#63a401"
                         icon={StarIcon}
+                        onClick={() => handleRemoveCoin(coin.id)}
                       />
                     </div>
                   </div>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <h3 className="font-regular text-foreground/80 text-sm cursor-pointer hover:text-primary" onClick={() => {
+                  <h3 className="font-regular text-foreground/80 text-xs cursor-pointer hover:text-primary" onClick={() => {
                     router.push(`/coin/${coin.id}`);
                   }}>
                     {coin.name}
                   </h3>
                   {coin.market_data?.current_price?.usd ? (
-                    <div className="font-semibold text-xl">
+                    <div className="font-semibold text-lg">
                       ${coin.market_data.current_price.usd.toFixed(2)}
                     </div>
                   ) : null}
@@ -313,7 +315,7 @@ const Watchlist = () => {
           ))}
           <Dialog onOpenChange={handleDialogOpenChange} open={dialogOpen}>
             <DialogTrigger>
-              <Card className="group cursor-pointer bg-secondary/20 border-dashed border-2 border-muted-foreground/30 hover:border-primary/50 hover:bg-secondary/40 transition-all duration-300">
+              <Card className="group cursor-pointer h-full bg-secondary/20 border-dashed hover:border-primary/50 hover:bg-secondary/40 transition-all duration-300">
                 <CardContent className="flex flex-col items-center justify-center gap-3 h-full">
                   <div className="rounded-full border p-4">
                     <svg

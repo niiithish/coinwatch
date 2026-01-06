@@ -16,7 +16,7 @@ const DashboardPage = () => {
           <Watchlist />
         </div>
       </div>
-      <div className="flex h-[60vh] gap-8">
+      <div className="flex h-[80vh] gap-8">
         <div className="flex flex-1 flex-col gap-4 h-full">
           <TrendingToday />
         </div>

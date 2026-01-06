@@ -13,7 +13,7 @@ import {
   Title,
   Tooltip,
 } from "chart.js";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Line } from "react-chartjs-2";
 
 // Register Chart.js components
@@ -42,7 +42,34 @@ export function LineChart({
   gradientColor = "#46B49E",
 }: LineChartProps) {
   const chartRef = useRef<ChartJS<"line">>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [chartData, setChartData] = useState<ChartData<"line">>(data);
+
+  // Force chart resize when container size changes
+  const handleResize = useCallback(() => {
+    const chart = chartRef.current;
+    if (chart) {
+      // Force chart to recalculate its size
+      chart.resize();
+    }
+  }, []);
+
+  // ResizeObserver to detect container size changes (handles browser zoom)
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const resizeObserver = new ResizeObserver(() => {
+      // Use requestAnimationFrame to debounce resize calls
+      requestAnimationFrame(handleResize);
+    });
+
+    resizeObserver.observe(container);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [handleResize]);
 
   useEffect(() => {
     const chart = chartRef.current;
@@ -169,8 +196,13 @@ export function LineChart({
   };
 
   return (
-    <div className={`relative w-full h-full ${className}`}>
-      <Line data={chartData} options={defaultOptions} ref={chartRef} />
+    <div
+      ref={containerRef}
+      className={`relative w-full h-full overflow-hidden ${className}`}
+    >
+      <div className="absolute inset-0">
+        <Line data={chartData} options={defaultOptions} ref={chartRef} />
+      </div>
     </div>
   );
 }
