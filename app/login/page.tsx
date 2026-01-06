@@ -11,11 +11,16 @@ const Login = async () => {
         </div>
       </div>
       <div className="flex flex-3 flex-col justify-center bg-card">
-        <div className="flex h-full items-center items-center justify-center">
+        <div className="flex flex-1 items-center justify-center">
           <ReviewCard />
         </div>
-        <div className="flex items-end justify-end">
-          <Image alt="Image" height={560} src="/dashboard.webp" width={480} />
+        <div className="flex items-end justify-end min-h-[400px]">
+          <Image
+            alt="Image"
+            height={650}
+            src="/dashboard.webp"
+            width={650}
+          />
         </div>
       </div>
     </div>
