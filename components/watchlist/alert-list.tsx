@@ -180,7 +180,7 @@ const AlertList = () => {
             const coinImage = priceData?.image || "";
 
             return (
-              <Card key={alert.id} className="bg-secondary/30 py-3">
+              <Card key={alert.id} className="bg-secondary/10 py-3">
                 <CardContent className="flex flex-col gap-3 px-3">
                   {/* Coin Info Row */}
                   <div className="flex items-center justify-between">

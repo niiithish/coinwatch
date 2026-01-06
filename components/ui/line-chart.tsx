@@ -169,7 +169,7 @@ export function LineChart({
   };
 
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative w-full h-full ${className}`}>
       <Line data={chartData} options={defaultOptions} ref={chartRef} />
     </div>
   );

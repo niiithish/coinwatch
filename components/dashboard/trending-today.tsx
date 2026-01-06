@@ -96,11 +96,7 @@ const TrendingToday = () => {
                           width={24}
                         />
                         <p
-                          className="hover:underline whitespace-nowrap overflow-hidden"
-                          style={{
-                            maskImage: "linear-gradient(to right, black 80%, transparent 100%)",
-                            WebkitMaskImage: "linear-gradient(to right, black 80%, transparent 100%)",
-                          }}
+                          className="hover:underline whitespace-nowrap overflow-hidden text-ellipsis"
                         >
                           {coin.item.name}
                         </p>

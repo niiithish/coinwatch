@@ -17,7 +17,7 @@ interface Coin {
   image: string;
 }
 
-const MarkerSummary = () => {
+const MarketSummary = () => {
   const [id, setId] = useState("smart-contract-platform");
   const [coins, setCoins] = useState<Coin[]>([]);
   const [coin, setCoin] = useState("bitcoin");
@@ -117,13 +117,13 @@ const MarkerSummary = () => {
   }, [coin]);
 
   return (
-    <div className="flex flex-col gap-4 w-full">
+    <div className="flex flex-col gap-4 w-full h-full">
       <div className="flex flex-row items-center justify-between">
         <h1 className="text-lg font-bold">Market Summary</h1>
       </div>
-      <Card className="w-full">
-        <CardHeader>
-          <Tabs value={id}>
+      <Card className="w-full flex-1 flex flex-col overflow-hidden min-h-0">
+        <Tabs value={id} className="flex-1 flex flex-col overflow-hidden min-h-0">
+          <CardHeader>
             <TabsList className="shadow-sm">
               <TabsTrigger
                 onClick={() => setId("smart-contract-platform")}
@@ -150,14 +150,16 @@ const MarkerSummary = () => {
                 Proof of Stake (PoS)
               </TabsTrigger>
             </TabsList>
-            <TabsContent className="flex w-full flex-col gap-5" value={id}>
-              <div className="flex">
-                <LineChart className="h-52 w-full" data={chartData} />
+          </CardHeader>
+          <CardContent className="flex-1 flex flex-col overflow-hidden min-h-0">
+            <TabsContent className="flex w-full flex-col gap-4 h-full" value={id}>
+              <div className="h-[calc(100%-115px)]">
+                <LineChart className="w-full h-full" data={chartData} />
               </div>
               <div className="flex items-stretch justify-between gap-5">
                 {coins.map((item: Coin) => (
                   <Card
-                    className={`h-full w-full cursor-pointer border-0 ${item.id === coin ? "bg-secondary/50 shadow-sm" : ""}`}
+                    className={`w-full cursor-pointer border-0 ${item.id === coin ? "bg-secondary/50 shadow-sm" : ""}`}
                     key={item.id}
                     onClick={() => {
                       setCoin(item.id);
@@ -194,11 +196,11 @@ const MarkerSummary = () => {
                 ))}
               </div>
             </TabsContent>
-          </Tabs>
-        </CardHeader>
+          </CardContent>
+        </Tabs>
       </Card>
     </div>
   );
 };
 
-export default MarkerSummary;
+export default MarketSummary;

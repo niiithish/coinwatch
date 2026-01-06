@@ -1,7 +1,9 @@
+import News from "@/components/news/news";
+
 const NewsPage = () => {
   return (
-    <div>
-      <h1>News</h1>
+    <div className="flex flex-col gap-10 p-8">
+      <News />
     </div>
   );
 };

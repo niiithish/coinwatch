@@ -196,7 +196,7 @@ const SearchDialog = () => {
     <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger className="cursor-pointer">Search</DialogTrigger>
       <DialogContent
-        className="min-w-lg gap-0 overflow-hidden p-0"
+        className="w-lg gap-0 overflow-hidden p-0"
         showCloseButton={false}
       >
         <DialogTitle className="sr-only">Search Coins</DialogTitle>
@@ -262,21 +262,13 @@ const SearchDialog = () => {
                             src={coin.image}
                           />
                         </div>
-                        <div className="flex flex-1 flex-col gap-1">
-                          <span className="truncate font-medium text-sm uppercase">
+                        <div className="flex flex-1 flex-col gap-1 overflow-hidden min-w-0">
+                          <span className="font-medium text-sm uppercase whitespace-nowrap overflow-hidden text-ellipsis">
                             {coin.name}
                           </span>
-                          <div className="flex min-w-[140px] max-w-[140px] items-center justify-between gap-3">
-                            <span className="truncate text-muted-foreground text-xs">
-                              {coin.symbol}
-                            </span>
-                            <Badge
-                              className="px-1.5 py-0 text-[10px] text-muted-foreground"
-                              variant="secondary"
-                            >
-                              Rank: #{coin.rank}
-                            </Badge>
-                          </div>
+                          <span className="truncate text-muted-foreground text-xs">
+                            {coin.symbol}
+                          </span>
                         </div>
                         <button
                           className="rounded-full p-1 transition-colors hover:bg-accent"
@@ -285,10 +277,11 @@ const SearchDialog = () => {
                           title={isInWatchlist(coin.id) ? "Remove from watchlist" : "Add to watchlist"}
                         >
                           <HugeiconsIcon
-                            className={isInWatchlist(coin.id) ? "text-yellow-500" : "text-muted-foreground"}
+                            className={isInWatchlist(coin.id) ? "#63a401" : "text-muted-foreground"}
                             icon={StarIcon}
                             size={20}
-                            fill={isInWatchlist(coin.id) ? "#eab308" : "none"}
+                            fill={isInWatchlist(coin.id) ? "#63a401" : "none"}
+                            color="#63a401"
                           />
                         </button>
                       </div>

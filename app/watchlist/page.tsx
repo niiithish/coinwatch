@@ -6,7 +6,7 @@ const WatchlistPage = () => {
   return (
     <div className="flex flex-col gap-8 p-8">
       <div className="flex h-full max-h-[80vh] min-h-[80vh] flex-row gap-10">
-        <div className="flex w-full flex-3">
+        <div className="flex w-full flex-2">
           <WatchlistTable />
         </div>
         <div className="flex w-full flex-1">
