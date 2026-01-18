@@ -171,7 +171,7 @@ const AlertList = () => {
             const priceData = coinPrices[alert.coinId];
             const currentPrice = priceData?.currentPrice ?? 0;
             const priceChange = priceData?.priceChange24h ?? 0;
-            const coinImage = priceData?.image || "";
+            const coinImage = priceData?.image;
 
             return (
               <Card className="bg-secondary/10 py-3" key={alert.id}>
@@ -179,13 +179,19 @@ const AlertList = () => {
                   {/* Coin Info Row */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <Image
-                        alt="No Image"
-                        className="rounded-full"
-                        height={32}
-                        src={coinImage}
-                        width={32}
-                      />
+                      {coinImage ? (
+                        <Image
+                          alt={alert.coinName}
+                          className="rounded-full"
+                          height={32}
+                          src={coinImage}
+                          width={32}
+                        />
+                      ) : (
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-muted text-muted-foreground text-xs font-medium">
+                          {alert.coinSymbol?.slice(0, 2).toUpperCase() || "?"}
+                        </div>
+                      )}
                       <div className="flex flex-col gap-1">
                         <span className="font-medium text-muted-foreground text-sm">
                           {alert.coinName}

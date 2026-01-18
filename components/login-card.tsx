@@ -4,7 +4,6 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -26,24 +25,41 @@ const LoginForm = () => {
   const router = useRouter();
   const [visible, setVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
+    setError(null);
 
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
 
     try {
-      await authClient.signIn.email({
+      const { error } = await authClient.signIn.email({
         email,
         password,
         callbackURL: "/dashboard",
       });
+
+      if (error) {
+        // Handle specific error cases
+        if (error.code === "INVALID_PASSWORD") {
+          setError("Incorrect password. Please try again.");
+        } else if (error.code === "USER_NOT_FOUND") {
+          setError("No account found with this email address.");
+        } else if (error.code === "INVALID_EMAIL_OR_PASSWORD") {
+          setError("Invalid email or password. Please try again.");
+        } else {
+          setError(error.message || "Failed to sign in. Please check your credentials.");
+        }
+        return;
+      }
+
       router.push("/dashboard");
     } catch (_error) {
-      toast.error("Failed to sign in. Please check your credentials.");
+      setError("An unexpected error occurred. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -95,6 +111,9 @@ const LoginForm = () => {
                     size={16}
                   />
                 </div>
+                {error && (
+                  <p className="text-xs text-destructive">{error}</p>
+                )}
               </Field>
               <Field>
                 <Button disabled={isLoading} type="submit">
