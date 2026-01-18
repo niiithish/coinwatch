@@ -88,7 +88,7 @@ const MarketSummary = () => {
           value={categoryId}
         >
           <CardHeader>
-            <TabsList className="shadow-sm">
+            <TabsList className="h-auto w-full flex-wrap justify-start gap-1 overflow-x-auto shadow-sm md:flex-nowrap md:justify-center">
               <TabsTrigger
                 onClick={() => handleCategoryChange("smart-contract-platform")}
                 value="smart-contract-platform"
@@ -117,13 +117,13 @@ const MarketSummary = () => {
           </CardHeader>
           <CardContent className="flex min-h-0 flex-1 flex-col overflow-hidden">
             <TabsContent
-              className="flex h-full w-full flex-col gap-4"
+              className="flex w-full flex-col gap-4"
               value={categoryId}
             >
-              <div className="h-[calc(100%-115px)]">
+              <div className="relative h-[200px] w-full md:h-[280px]">
                 <LineChart className="h-full w-full" data={chartData} />
               </div>
-              <div className="flex items-stretch justify-between gap-5">
+              <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-3">
                 {coins.map((item: Coin) => (
                   <Card
                     className={`w-full cursor-pointer border-0 ${item.id === (selectedCoin || coins[0]?.id) ? "bg-secondary/50 shadow-sm" : ""}`}

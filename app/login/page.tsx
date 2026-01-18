@@ -10,7 +10,7 @@ const Login = async () => {
           <LoginCard />
         </div>
       </div>
-      <div className="flex flex-3 flex-col justify-center bg-card">
+      <div className="hidden md:flex flex-3 flex-col justify-center bg-card">
         <div className="flex flex-1 items-center justify-center">
           <ReviewCard />
         </div>

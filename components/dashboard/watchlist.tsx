@@ -173,9 +173,9 @@ const Watchlist = () => {
         </Button>
       </div>
       <Card className="min-h-0 flex-1 content-start items-start gap-4 overflow-auto p-4">
-        <div className="grid w-full grid-cols-3 gap-4">
+        <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {coinsLoading && watchlistItems.length > 0 ? (
-            <div className="col-span-3 flex items-center justify-center py-8">
+            <div className="col-span-1 flex items-center justify-center py-8 sm:col-span-2 lg:col-span-3">
               <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
             </div>
           ) : (

@@ -5,7 +5,7 @@ import WatchlistTable from "@/components/watchlist/watchlist-table";
 const WatchlistPage = () => {
   return (
     <div className="flex flex-col gap-8 p-8">
-      <div className="flex h-full max-h-[80vh] min-h-[80vh] flex-row gap-10">
+      <div className="flex flex-col gap-10 md:flex-row md:max-h-[80vh] md:min-h-[80vh]">
         <div className="flex w-full flex-2">
           <WatchlistTable />
         </div>
