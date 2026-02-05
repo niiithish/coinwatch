@@ -128,13 +128,13 @@ const MarketSummary = () => {
           </CardHeader>
           <CardContent className="flex min-h-0 flex-1 flex-col overflow-hidden">
             <TabsContent
-              className="flex w-full flex-col gap-4"
+              className="flex min-h-0 w-full flex-1 flex-col gap-4 overflow-auto"
               value={categoryId}
             >
               <div className="relative h-[200px] w-full md:h-[280px]">
                 <LineChart className="h-full w-full" data={chartData} />
               </div>
-              <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-3">
+              <div className="grid grid-cols-2 gap-3 pb-2 md:grid-cols-3 md:gap-3">
                 {coins.map((item: Coin) => (
                   <Card
                     aria-label={`Select ${item.name} to view chart`}

@@ -4,7 +4,7 @@ import { Search01Icon, StarIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -35,19 +35,26 @@ interface CoinData {
   };
 }
 
-interface SearchCoin {
-  id: string;
-  name: string;
-  api_symbol: string;
-  symbol: string;
-  market_cap_rank: number | null;
-  thumb: string;
-  large: string;
+interface TrendingCoin {
+  item: {
+    id: string;
+    name: string;
+    symbol: string;
+    market_cap_rank: number;
+    thumb: string;
+    small: string;
+    large: string;
+  };
 }
 
-interface SearchResponse {
-  coins: SearchCoin[];
+interface TrendingCoinResult {
+  id: string;
+  name: string;
+  symbol: string;
+  image: string;
+  rank: number | null;
 }
+
 
 const Watchlist = () => {
   const router = useRouter();
@@ -90,6 +97,8 @@ const Watchlist = () => {
   };
 
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [trendingCoins, setTrendingCoins] = useState<TrendingCoinResult[]>([]);
+  const [isTrendingLoading, setIsTrendingLoading] = useState(false);
 
   // Use the shared search hook
   const {
@@ -112,9 +121,34 @@ const Watchlist = () => {
     }
   };
 
+  // Fetch trending coins
+  const fetchTrending = useCallback(async () => {
+    setIsTrendingLoading(true);
+    try {
+      const response = await fetch("/api/coingecko?endpoint=/search/trending");
+      const data = await response.json();
+      const trending: TrendingCoinResult[] = data.coins
+        .slice(0, 8)
+        .map((c: TrendingCoin) => ({
+          id: c.item.id,
+          name: c.item.name,
+          symbol: c.item.symbol,
+          image: c.item.large,
+          rank: c.item.market_cap_rank,
+        }))
+        .filter((coin: TrendingCoinResult) => !coinIds.includes(coin.id));
+      setTrendingCoins(trending);
+    } catch (error) {
+      console.error("Error fetching trending coins:", error);
+    } finally {
+      setIsTrendingLoading(false);
+    }
+  }, [coinIds]);
+
   const handleDialogOpenChange = (open: boolean) => {
     if (open) {
       setDialogOpen(true);
+      fetchTrending();
     } else {
       setDialogOpen(false);
       clearSearch();
@@ -314,6 +348,61 @@ const Watchlist = () => {
                         </CardContent>
                       </Card>
                     ))}
+                  </div>
+                )}
+
+                {/* Trending Coins (shown when no search query) */}
+                {!searchQuery && (
+                  <div className="flex flex-col gap-2">
+                    <p className="font-medium text-muted-foreground text-xs">Trending Coins</p>
+                    {isTrendingLoading && (
+                      <div className="flex items-center justify-center py-4">
+                        <div className="h-5 w-5 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                      </div>
+                    )}
+                    {!isTrendingLoading && trendingCoins.length > 0 && (
+                      <div className="max-h-64 gap-2 overflow-y-auto rounded-sm" role="listbox">
+                        {trendingCoins.map((coin) => (
+                          <Card
+                            aria-label={`Add ${coin.name} (${coin.symbol}) to watchlist`}
+                            className="cursor-pointer rounded-none"
+                            key={coin.id}
+                            onClick={() => handleAddCoin(coin.id)}
+                            onKeyDown={handleKeyPress(() => handleAddCoin(coin.id))}
+                            role="option"
+                            tabIndex={0}
+                          >
+                            <CardContent className="flex gap-4">
+                              <Image
+                                alt={`${coin.name} logo`}
+                                className="rounded-full"
+                                height={24}
+                                src={coin.image}
+                                width={34}
+                              />
+                              <div className="min-w-0 flex-1">
+                                <div className="truncate font-medium text-foreground">
+                                  {coin.name}
+                                </div>
+                                <div className="text-muted-foreground text-xs uppercase">
+                                  {coin.symbol}
+                                </div>
+                              </div>
+                              {coin.rank && (
+                                <Badge variant="outline">
+                                  #{coin.rank}
+                                </Badge>
+                              )}
+                            </CardContent>
+                          </Card>
+                        ))}
+                      </div>
+                    )}
+                    {!isTrendingLoading && trendingCoins.length === 0 && (
+                      <div className="py-4 text-center text-muted-foreground text-sm">
+                        No trending coins available
+                      </div>
+                    )}
                   </div>
                 )}
 
